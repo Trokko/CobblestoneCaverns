@@ -45,9 +45,12 @@ export class Enemy {
         this.wanderRadius = data.wanderRadius || 5;
         this.lastWanderPos = { x: this.x, y: this.y };
         this.wanderTimer = 0;
-        this.wanderChangeInterval = 3; // Change direction every 3 turns
+        this.wanderChangeInterval = 3; // Change target every N turns
         this.chasePath = [];
         this.targetPlayer = null;
+        // Wandering target (a specific tile to roam towards)
+        this.wanderTarget = null;
+        this.wanderPath = [];
         
         // Combat
         this.experienceReward = data.experienceReward || 50;
@@ -85,7 +88,7 @@ export class Enemy {
         if (this.aiState === 'chase') {
             await this.executeChase(player, dungeon);
         } else if (this.aiState === 'wander') {
-            this.executeWander(dungeon);
+            await this.executeWander(dungeon);
         } else {
             // Idle - do nothing
         }
@@ -98,29 +101,33 @@ export class Enemy {
      */
     async executeChase(player, dungeon) {
         const distToPlayer = this.getDistanceTo(player.x, player.y);
-        
+
         // If adjacent to player, attack instead of moving
         if (distToPlayer <= 1) {
-            // This will be handled in combat system
+            // Combat handled elsewhere; try to stay adjacent
             return;
         }
-        
-        // Find path to player using simple A* or BFS
+
+        // Find path to player using BFS
         const path = this.findPathToPlayer(player, dungeon);
-        
+
         if (path && path.length > 0) {
             // Move one step along the path
             const nextPos = path[0];
-            
+
             // Check if tile is walkable and not occupied
             if (dungeon.isWalkable(nextPos.x, nextPos.y)) {
                 const entityAtPos = dungeon.getEntityAt(nextPos.x, nextPos.y);
                 if (!entityAtPos) {
-                    // Move to next position
                     this.x = nextPos.x;
                     this.y = nextPos.y;
                 }
             }
+        } else {
+            // No path found to player (maybe blocked) → fallback to wandering behavior
+            this.aiState = 'wander';
+            this.targetPlayer = null;
+            this.wanderTimer = this.wanderChangeInterval; // force pick new wander target next turn
         }
     }
     

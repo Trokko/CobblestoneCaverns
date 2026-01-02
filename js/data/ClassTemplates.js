@@ -17,7 +17,7 @@ export const ClassTemplates = {
     warrior: {
         name: 'Warrior',
         description: 'A balanced fighter with good defense and moderate damage. Ideal for beginners.',
-        sprite: 'warrior_m_1.png',
+        sprite: 'warrior',
         
         // Grundstats vid level 1
         baseStats: {
@@ -80,7 +80,7 @@ export const ClassTemplates = {
     barbarian: {
         name: 'Barbarian',
         description: 'A brutal warrior with high attack and HP but lower defense. High risk, high reward.',
-        sprite: 'barbarian_1.png',
+        sprite: 'barbarian',
         
         // Grundstats vid level 1 (högst HP och ATK!)
         baseStats: {
@@ -143,7 +143,7 @@ export const ClassTemplates = {
     rogue: {
         name: 'Rogue',
         description: 'A nimble fighter with high critical chance and evasion. Requires tactical gameplay.',
-        sprite: 'thief_1.png',
+        sprite: 'rogue',
         
         // Grundstats vid level 1 (lägst HP, högst CRT!)
         baseStats: {

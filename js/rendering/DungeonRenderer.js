@@ -11,6 +11,7 @@
  */
 
 import { TILE_TYPES, CONFIG } from '../config.js';
+import { assetLoader } from '../core/AssetLoader.js';
 
 class DungeonRenderer {
     constructor(canvas) {
@@ -239,14 +240,21 @@ class DungeonRenderer {
         
         // Render by entity type
         if (entity.type === 'enemy') {
-            // Enemy: Red square
-            this.ctx.fillStyle = entity.color || '#ff3333';
-            this.ctx.fillRect(
-                screenX + this.tileSize * 0.2,
-                screenY + this.tileSize * 0.2,
-                this.tileSize * 0.6,
-                this.tileSize * 0.6
-            );
+            // Try drawing sprite if available
+            const spriteKey = typeof entity.sprite === 'string' ? entity.sprite.replace(/\.[^/.]+$/, '') : entity.sprite;
+            const img = assetLoader && assetLoader.hasImage && assetLoader.hasImage(spriteKey) ? assetLoader.getImage(spriteKey) : null;
+            if (img) {
+                this.ctx.drawImage(img, screenX, screenY, this.tileSize, this.tileSize);
+            } else {
+                // Fallback: colored square
+                this.ctx.fillStyle = entity.color || '#ff3333';
+                this.ctx.fillRect(
+                    screenX + this.tileSize * 0.2,
+                    screenY + this.tileSize * 0.2,
+                    this.tileSize * 0.6,
+                    this.tileSize * 0.6
+                );
+            }
         } else if (entity.type === 'item') {
             // Item: Rarity-based color diamond shape
             const color = entity.getColor ? entity.getColor() : entity.color || '#FFD700';
@@ -294,22 +302,29 @@ class DungeonRenderer {
         const screenX = (player.x - this.camera.x) * this.tileSize;
         const screenY = (player.y - this.camera.y) * this.tileSize;
         
-        // Draw player circle
-        this.ctx.fillStyle = '#4169e1'; // Royal blue
-        this.ctx.beginPath();
-        this.ctx.arc(
-            screenX + this.tileSize / 2,
-            screenY + this.tileSize / 2,
-            this.tileSize * 0.4,
-            0,
-            Math.PI * 2
-        );
-        this.ctx.fill();
-        
-        // Draw player outline
-        this.ctx.strokeStyle = '#ffffff';
-        this.ctx.lineWidth = 2;
-        this.ctx.stroke();
+        // Try drawing player sprite if available
+        const playerSpriteKey = typeof player.sprite === 'string' ? player.sprite.replace(/\.[^/.]+$/, '') : player.sprite;
+        const playerImg = assetLoader && assetLoader.hasImage && assetLoader.hasImage(playerSpriteKey) ? assetLoader.getImage(playerSpriteKey) : null;
+        if (playerImg) {
+            this.ctx.drawImage(playerImg, screenX, screenY, this.tileSize, this.tileSize);
+        } else {
+            // Draw player circle
+            this.ctx.fillStyle = '#4169e1'; // Royal blue
+            this.ctx.beginPath();
+            this.ctx.arc(
+                screenX + this.tileSize / 2,
+                screenY + this.tileSize / 2,
+                this.tileSize * 0.4,
+                0,
+                Math.PI * 2
+            );
+            this.ctx.fill();
+            
+            // Draw player outline
+            this.ctx.strokeStyle = '#ffffff';
+            this.ctx.lineWidth = 2;
+            this.ctx.stroke();
+        }
     }
 
     /**

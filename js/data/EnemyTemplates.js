@@ -13,7 +13,7 @@
 export const EnemyTemplates = {
     goblin: {
         name: 'Goblin',
-        sprite: 'goblin.png',
+        sprite: 'goblin',
         description: 'A small, weak creature. Easy prey.',
         
         // Base stats
@@ -33,7 +33,7 @@ export const EnemyTemplates = {
     
     skeleton: {
         name: 'Skeleton',
-        sprite: 'skeleton.png',
+        sprite: 'skeleton',
         description: 'An undead warrior. Fragile but deadly.',
         
         // Base stats
@@ -73,7 +73,7 @@ export const EnemyTemplates = {
     
     rat: {
         name: 'Giant Rat',
-        sprite: 'rat_giant.png',
+        sprite: 'giantRat',
         description: 'A diseased rodent. Quick but weak.',
         
         // Base stats

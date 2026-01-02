@@ -59,10 +59,16 @@ class UIManager {
         const buttonElements = modal.querySelectorAll('button');
         buttonElements.forEach((btn, index) => {
             btn.addEventListener('click', () => {
-                if (buttons[index].onClick) {
-                    buttons[index].onClick();
+                try {
+                    if (buttons[index].onClick) {
+                        buttons[index].onClick();
+                    }
+                } catch (err) {
+                    console.error('Error while executing modal button callback:', err);
+                } finally {
+                    // Always close modal even if callback throws
+                    this.closeModal();
                 }
-                this.closeModal();
             });
         });
 

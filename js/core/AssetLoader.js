@@ -170,7 +170,7 @@ class AssetLoader {
         assets.push(
             { name: 'giantRat', path: 'Assets/Art/uf_heroes/rat_giant_1.png' },
             { name: 'giantBat', path: 'Assets/Art/uf_heroes/bat_giant_1.png' },
-            { name: 'goblinWarrior', path: 'Assets/Art/uf_heroes/goblin_wawrrior_1.png' },
+            { name: 'goblinWarrior', path: 'Assets/Art/uf_heroes/goblin_warrior_1.png' },
             { name: 'spider', path: 'Assets/Art/uf_heroes/spider_brown_1.png' },
             { name: 'giantSpider', path: 'Assets/Art/uf_heroes/spider_brown_giant_1.png' },
             { name: 'lizardman', path: 'Assets/Art/uf_heroes/lizardman_green_1.png' },

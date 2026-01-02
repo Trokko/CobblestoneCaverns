@@ -11,6 +11,8 @@
  * All visuell feedback till spelaren går genom här!
  */
 
+import { assetLoader } from '../core/AssetLoader.js';
+
 class HUDManager {
     constructor() {
         this.elements = {};               // Cacade DOM-element för snabb access
@@ -109,13 +111,30 @@ class HUDManager {
         }
         
         if (this.elements.charPortrait) {
-            const spritePath = `Assets/Art/uf_heroes/${this.currentPlayer.sprite}`;
-            this.elements.charPortrait.src = spritePath;
+            const spriteKey = this.currentPlayer.sprite;
+            let spriteSrc = null;
+            if (assetLoader && assetLoader.hasImage && assetLoader.hasImage(spriteKey)) {
+                spriteSrc = assetLoader.getImage(spriteKey).src;
+            } else if (spriteKey && typeof spriteKey === 'string' && spriteKey.startsWith('Assets/')) {
+                spriteSrc = spriteKey;
+            } else {
+                // Fallback: assume filename in uf_heroes
+                spriteSrc = `Assets/Art/uf_heroes/${spriteKey}`;
+            }
+            this.elements.charPortrait.src = spriteSrc;
             this.elements.charPortrait.alt = this.currentPlayer.className;
         }
         if (this.elements.floatCharPortrait) {
-            const spritePath = `Assets/Art/uf_heroes/${this.currentPlayer.sprite}`;
-            this.elements.floatCharPortrait.src = spritePath;
+            const spriteKey = this.currentPlayer.sprite;
+            let spriteSrc = null;
+            if (assetLoader && assetLoader.hasImage && assetLoader.hasImage(spriteKey)) {
+                spriteSrc = assetLoader.getImage(spriteKey).src;
+            } else if (spriteKey && typeof spriteKey === 'string' && spriteKey.startsWith('Assets/')) {
+                spriteSrc = spriteKey;
+            } else {
+                spriteSrc = `Assets/Art/uf_heroes/${spriteKey}`;
+            }
+            this.elements.floatCharPortrait.src = spriteSrc;
             this.elements.floatCharPortrait.alt = this.currentPlayer.className;
         }
         
@@ -584,9 +603,9 @@ class HUDManager {
             if (portrait) {
                 const rect = portrait.getBoundingClientRect();
                 window.uiManager.showFloatingText(
-                    text,
                     rect.left + rect.width / 2,
                     rect.top,
+                    text,
                     type
                 );
             }
