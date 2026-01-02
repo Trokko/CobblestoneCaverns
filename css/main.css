@@ -1,0 +1,381 @@
+/* Cobblestone Caverns - Main Stylesheet */
+
+/* CSS Variables */
+:root {
+    /* Colors */
+    --color-bg: #1a1410;
+    --color-text: #f4e4c1;
+    --color-text-dark: #8b7355;
+    --color-accent: #d4af37;
+    --color-danger: #dc143c;
+    --color-success: #32cd32;
+    --color-warning: #ffa500;
+    
+    /* Rarity Colors */
+    --color-common: #ffffff;
+    --color-uncommon: #1eff00;
+    --color-rare: #0070dd;
+    --color-epic: #a335ee;
+    --color-legendary: #ff8000;
+    
+    /* Status Effect Colors */
+    --color-burn: #ff4500;
+    --color-poison: #9acd32;
+    --color-bleed: #dc143c;
+    --color-freeze: #00bfff;
+    --color-stun: #ffd700;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    
+    /* Font Sizes */
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 20px;
+    --font-size-xl: 24px;
+    --font-size-xxl: 32px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'IM Fell English SC', serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-size: var(--font-size-md);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Apply IM Fell English SC globally */
+h1, h2, h3, h4, h5, h6, p, span, button, input, select, textarea, label, li {
+    font-family: 'IM Fell English SC', serif;
+}
+
+/* Override RPGUI to ensure buttons are clickable */
+button, .rpgui-button {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+/* App Container */
+#app {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Screen Management */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    padding: var(--spacing-lg);
+    z-index: 1;
+}
+
+.screen.active {
+    display: flex;
+    opacity: 1;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+/* Game Screen - Override centering */
+#game-screen {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#game-screen.active {
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    padding: 0 !important;
+}
+
+/* Main Menu */
+#main-menu {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
+                url('../Assets/Art/background-dungeon.jpg') center/cover;
+    flex-direction: column;
+}
+
+.menu-container {
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+}
+
+.game-title {
+    font-size: var(--font-size-xxl);
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-xl);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    letter-spacing: 2px;
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.menu-buttons button {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.copyright {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-dark);
+    margin-top: var(--spacing-xl);
+}
+
+/* Help Panel */
+#help-panel {
+    overflow-y: auto;
+}
+
+#help-panel .rpgui-container {
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: var(--spacing-lg);
+}
+
+#help-panel h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-accent);
+}
+
+.help-content {
+    margin-bottom: var(--spacing-lg);
+}
+
+.help-content section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.help-content h3 {
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-text-dark);
+    padding-bottom: var(--spacing-xs);
+}
+
+.help-content h4 {
+    color: var(--color-text);
+    margin: var(--spacing-sm) 0;
+    font-size: var(--font-size-md);
+}
+
+.help-content ul {
+    list-style: none;
+    padding-left: var(--spacing-md);
+}
+
+.help-content li {
+    margin-bottom: var(--spacing-xs);
+    position: relative;
+    padding-left: var(--spacing-md);
+}
+
+.help-content li:before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+}
+
+/* Character Creation */
+#character-creation .rpgui-container {
+    max-width: 1000px;
+    width: 100%;
+    padding: var(--spacing-lg);
+}
+
+#character-creation h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-accent);
+}
+
+.class-selection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Game Screen */
+#game-screen {
+    display: none;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#game-screen.active {
+    display: flex;
+}
+
+#game-canvas {
+    display: none;
+}
+
+/* Floating Stats Panel (Left Sidebar) - REMOVED */
+#floating-stats {
+    display: none !important;
+}
+
+/* Dungeon Container (Center) */
+#dungeon-container {
+    flex-grow: 1 !important;
+    flex-shrink: 0 !important;
+    flex-basis: calc(100% - 320px) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: #000 !important;
+    min-width: calc(100vw - 320px) !important;
+    width: calc(100vw - 320px) !important;
+    height: 100% !important;
+    max-width: calc(100vw - 320px) !important;
+}
+
+#dungeon-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+/* Game HUD (Right Sidebar) */
+#game-hud {
+    flex-basis: 320px !important;
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+    width: 320px !important;
+    min-width: 320px !important;
+    max-width: 320px !important;
+    background: rgba(44, 24, 16, 0.95) !important;
+    padding: 10px !important;
+    border: 2px solid #d4af37 !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    max-height: 100vh;
+    box-sizing: border-box !important;
+    position: relative !important;
+    visibility: visible !important;
+    height: auto !important;
+    margin: 0 !important;
+}
+
+/* Game Over Screen */
+#game-over .rpgui-container {
+    max-width: 600px;
+    width: 100%;
+    padding: var(--spacing-lg);
+    text-align: center;
+}
+
+#game-over h2 {
+    color: var(--color-danger);
+    margin-bottom: var(--spacing-lg);
+}
+
+#final-stats {
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-size-lg);
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.fade-in {
+    animation: fadeIn var(--transition-normal) ease-in;
+}
+
+.fade-out {
+    animation: fadeOut var(--transition-normal) ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-accent);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text);
+}

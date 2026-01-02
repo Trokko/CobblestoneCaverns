@@ -1,0 +1,246 @@
+/* Responsive Design - Mobile First */
+
+/* Mobile (Default) - Up to 767px */
+@media (max-width: 767px) {
+    .game-title {
+        font-size: 28px;
+    }
+    
+    .menu-buttons button {
+        font-size: var(--font-size-sm);
+    }
+    
+    .class-selection {
+        grid-template-columns: 1fr;
+    }
+    
+    .class-card {
+        max-width: 100%;
+    }
+    
+    #help-panel .rpgui-container {
+        padding: var(--spacing-md);
+    }
+    
+    .help-content {
+        font-size: var(--font-size-sm);
+    }
+    
+    /* Mobile HUD Layout */
+    #game-hud {
+        font-size: var(--font-size-xs);
+        padding: var(--spacing-xs);
+    }
+    
+    .hud-top-bar {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+    
+    .character-portrait {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .progress-bars {
+        max-width: 100%;
+    }
+    
+    .combat-stats {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    
+    .stat-display {
+        font-size: 11px;
+    }
+    
+    .quick-slot {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .hud-quick-slots {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .inventory-slot {
+        width: 48px;
+        height: 48px;
+    }
+    
+    #dungeon-container {
+        min-height: 300px;
+    }
+}
+
+/* Tablet - 768px to 1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .game-title {
+        font-size: 36px;
+    }
+    
+    .class-selection {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .menu-container {
+        max-width: 700px;
+    }
+    
+    #help-panel .rpgui-container {
+        max-width: 900px;
+    }
+    
+    /* Tablet HUD Layout */
+    .hud-top-bar {
+        grid-template-columns: auto 1fr;
+    }
+    
+    .combat-stats {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        justify-content: center;
+        gap: var(--spacing-md);
+    }
+    
+    #dungeon-container {
+        min-height: 450px;
+    }
+}
+
+/* Desktop - 1024px and up */
+@media (min-width: 1024px) {
+    .game-title {
+        font-size: 48px;
+    }
+    
+    .class-selection {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .menu-container {
+        max-width: 800px;
+    }
+    
+    #help-panel .rpgui-container {
+        max-width: 1000px;
+    }
+    
+    #character-creation .rpgui-container {
+        max-width: 1200px;
+    }
+    
+    .screen {
+        padding: var(--spacing-xl);
+    }
+    
+    /* Desktop HUD Layout */
+    .hud-top-bar {
+        grid-template-columns: auto 1fr auto;
+    }
+    
+    #dungeon-container {
+        min-height: 600px;
+    }
+    
+    #game-screen {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 40px);
+    }
+    
+    #game-hud {
+        flex-shrink: 0;
+    }
+    
+    #dungeon-container {
+        flex: 1;
+    }
+}
+
+/* Landscape Mode for Mobile */
+@media (max-width: 767px) and (orientation: landscape) {
+    .game-title {
+        font-size: 24px;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .menu-buttons {
+        gap: var(--spacing-sm);
+    }
+    
+    .menu-buttons button {
+        padding: var(--spacing-xs) var(--spacing-md);
+    }
+    
+    #help-panel .rpgui-container {
+        max-height: 85vh;
+    }
+    
+    .help-content section {
+        margin-bottom: var(--spacing-sm);
+    }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    #dungeon-canvas {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+    
+    .class-card img,
+    .inventory-slot img,
+    .quick-slot img {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+
+/* Touch Device Adjustments */
+@media (hover: none) and (pointer: coarse) {
+    button.rpgui-button {
+        min-height: 44px; /* iOS recommended touch target size */
+    }
+    
+    .inventory-slot {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    .quick-slot {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .class-card:hover {
+        transform: none;
+    }
+    
+    button.rpgui-button:hover {
+        transform: none;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark Mode Support (if system preference) */
+@media (prefers-color-scheme: dark) {
+    /* Already dark by default, but can add adjustments if needed */
+}
+
+/* Print Styles (Hide game elements) */
+@media print {
+    #app {
+        display: none;
+    }
+}

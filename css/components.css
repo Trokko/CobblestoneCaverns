@@ -1,0 +1,1986 @@
+/* Component Styles */
+
+/* Character Creation */
+.class-selection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+.class-card {
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid var(--color-accent);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    position: relative;
+}
+
+.class-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-text);
+    box-shadow: 0 8px 16px rgba(212, 175, 55, 0.3);
+}
+
+.class-card.selected {
+    border-color: var(--color-success);
+    background: rgba(50, 205, 50, 0.15);
+    box-shadow: 0 0 20px rgba(50, 205, 50, 0.4);
+}
+
+.class-card.selected::before {
+    content: '✓';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: var(--color-success);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.class-header {
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.class-name {
+    color: var(--color-accent);
+    font-size: var(--font-size-lg);
+    margin: 0 0 var(--spacing-xs) 0;
+}
+
+.class-description {
+    color: var(--color-text-dark);
+    font-size: var(--font-size-sm);
+    margin: 0 0 var(--spacing-md) 0;
+    min-height: 40px;
+}
+
+.class-stats {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--color-text-dark);
+    border-radius: 4px;
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-xs) 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.stat-row:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    font-weight: bold;
+    color: var(--color-accent);
+    font-size: var(--font-size-sm);
+}
+
+.stat-value {
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+}
+
+.class-equipment {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--color-text-dark);
+    border-radius: 4px;
+    padding: var(--spacing-sm);
+}
+
+.class-equipment h4 {
+    color: var(--color-accent);
+    font-size: var(--font-size-sm);
+    margin: 0 0 var(--spacing-xs) 0;
+}
+
+.equipment-list {
+    font-size: var(--font-size-xs);
+}
+
+.equipment-item {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-xs) 0;
+}
+
+.equipment-label {
+    color: var(--color-text-dark);
+}
+
+.equipment-weapon,
+.equipment-armor,
+.equipment-accessory {
+    color: var(--color-text);
+}
+
+.selected-info {
+    text-align: center;
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-md);
+    background: rgba(50, 205, 50, 0.1);
+    border: 2px solid var(--color-success);
+    border-radius: 8px;
+}
+
+.selected-info h3 {
+    color: var(--color-success);
+    margin: 0 0 var(--spacing-xs) 0;
+}
+
+.selected-class-name {
+    color: var(--color-accent);
+}
+
+.selected-class-desc {
+    color: var(--color-text);
+    margin: var(--spacing-xs) 0 0 0;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+}
+
+/* Class Card */
+/* (Moved to Character Creation section above) */
+
+/* Progress Bars */
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--color-text-dark);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(to bottom, #4caf50, #2e7d32);
+    transition: width var(--transition-fast);
+    position: relative;
+}
+
+.progress-fill.hp {
+    background: linear-gradient(to bottom, #e53935, #c62828);
+}
+
+.progress-fill.xp {
+    background: linear-gradient(to bottom, #ffd700, #daa520);
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: var(--font-size-xs);
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 1px 2px #000;
+    z-index: 1;
+}
+
+/* Tooltips */
+.tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.95);
+    border: 2px solid var(--color-accent);
+    border-radius: 4px;
+    padding: var(--spacing-sm);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    max-width: 300px;
+    z-index: 10000;
+    pointer-events: none;
+    transform: translateX(-50%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: var(--color-accent);
+}
+
+/* Modals */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn var(--transition-fast);
+}
+
+.modal-content {
+    max-width: 400px;
+    width: auto;
+    min-width: 320px;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: slideIn var(--transition-normal);
+}
+
+.modal-content h2 {
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+.modal-body {
+    margin: var(--spacing-md) 0;
+    text-align: center;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-top: var(--spacing-md);
+}
+
+.modal-buttons button {
+    min-width: 120px;
+    max-width: 180px;
+    text-align: center;
+    line-height: 60px !important;
+}
+
+.modal-buttons button:not(.golden) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+}
+
+/* Floating Text */
+.floating-text {
+    position: absolute;
+    font-weight: bold;
+    font-size: var(--font-size-lg);
+    pointer-events: none;
+    z-index: 1000;
+    animation: floatUp 1.5s ease-out forwards;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+.floating-text.damage {
+    color: #ff4444;
+}
+
+.floating-text.heal {
+    color: #44ff44;
+}
+
+.floating-text.critical {
+    color: #ffaa00;
+    font-size: var(--font-size-xl);
+}
+
+.floating-text.miss {
+    color: #888888;
+}
+
+.floating-text.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Tooltips */
+.tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.95);
+    border: 2px solid var(--color-accent);
+    border-radius: 4px;
+    padding: var(--spacing-sm);
+    max-width: 300px;
+    z-index: 1000;
+    pointer-events: none;
+    font-size: var(--font-size-sm);
+}
+
+.tooltip .item-name {
+    font-weight: bold;
+    margin-bottom: var(--spacing-xs);
+}
+
+.tooltip .item-name.common { color: var(--color-common); }
+.tooltip .item-name.uncommon { color: var(--color-uncommon); }
+.tooltip .item-name.rare { color: var(--color-rare); }
+.tooltip .item-name.epic { color: var(--color-epic); }
+.tooltip .item-name.legendary { color: var(--color-legendary); }
+
+.tooltip .stat-positive {
+    color: var(--color-success);
+}
+
+.tooltip .stat-negative {
+    color: var(--color-danger);
+}
+
+/* Modal/Dialog */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: var(--color-bg);
+    border: 3px solid var(--color-accent);
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+}
+
+/* Inventory Slot */
+.inventory-slot {
+    width: 64px;
+    height: 64px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--color-text-dark);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.inventory-slot:hover {
+    border-color: var(--color-accent);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.inventory-slot.occupied {
+    border-color: var(--color-accent);
+}
+
+.inventory-slot.common { border-color: var(--color-common); }
+.inventory-slot.uncommon { border-color: var(--color-uncommon); }
+.inventory-slot.rare { border-color: var(--color-rare); }
+.inventory-slot.epic { border-color: var(--color-epic); }
+.inventory-slot.legendary { border-color: var(--color-legendary); }
+
+.inventory-slot img {
+    max-width: 90%;
+    max-height: 90%;
+    image-rendering: pixelated;
+}
+
+.inventory-slot .stack-count {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-size: var(--font-size-xs);
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 1px 2px #000;
+}
+
+/* HUD Components */
+.hud-section {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-display {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+}
+
+.stat-label {
+    font-weight: bold;
+    color: var(--color-accent);
+}
+
+.stat-value {
+    color: var(--color-text);
+}
+
+/* Quick Slots */
+.quick-slots {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.quick-slot {
+    width: 48px;
+    height: 48px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--color-accent);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.quick-slot img {
+    max-width: 90%;
+    max-height: 90%;
+    image-rendering: pixelated;
+}
+
+.quick-slot .key-hint {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* Combat Log */
+.combat-log {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--color-accent);
+    border-radius: 4px;
+    padding: var(--spacing-sm);
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: var(--font-size-xs);
+}
+
+.combat-log-entry {
+    margin: var(--spacing-xs) 0;
+}
+
+.combat-log-entry.damage {
+    color: var(--color-danger);
+}
+
+.combat-log-entry.heal {
+    color: var(--color-success);
+}
+
+.combat-log-entry.critical {
+    color: var(--color-legendary);
+    font-weight: bold;
+}
+
+/* Animations */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Button States */
+.rpgui-button:disabled,
+.rpgui-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.rpgui-button:hover:not(:disabled):not(.disabled) {
+    transform: translateY(-2px);
+}
+
+.rpgui-button:active:not(:disabled):not(.disabled) {
+    transform: translateY(0);
+}
+
+.bounce {
+    animation: bounce 0.5s ease;
+}
+
+.shake {
+    animation: shake 0.3s ease;
+}
+
+.pulse {
+    animation: pulse 1s ease infinite;
+}
+
+/* Button States */
+button.rpgui-button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button.rpgui-button:not([disabled]):hover {
+    transform: scale(1.05);
+    transition: transform var(--transition-fast);
+}
+
+button.rpgui-button:not([disabled]):active {
+    transform: scale(0.95);
+}
+
+/* Game HUD Styles */
+#game-hud {
+    background: rgba(44, 24, 16, 0.95);
+    padding: var(--spacing-md);
+    border-left: 2px solid var(--color-accent);
+}
+
+.hud-top-bar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    align-items: stretch;
+}
+
+/* Character Info */
+.character-info {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.character-portrait {
+    width: 64px;
+    height: 64px;
+    border: 2px solid var(--color-accent);
+    border-radius: 4px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.portrait-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: pixelated;
+}
+
+.character-stats {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.char-name-level {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: baseline;
+}
+
+.char-class {
+    font-size: var(--font-size-md);
+    font-weight: bold;
+    color: var(--color-accent);
+}
+
+.char-level {
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+}
+
+.char-floor {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-dark);
+}
+
+.floor-label {
+    color: var(--color-text-dark);
+}
+
+.floor-number {
+    color: var(--color-accent);
+    font-weight: bold;
+}
+
+/* Progress Bars */
+.progress-bars {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    flex: 1;
+    max-width: 400px;
+}
+
+.bar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-xs);
+    color: var(--color-text);
+}
+
+.bar-value {
+    font-weight: bold;
+}
+
+.rpgui-progress {
+    height: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--color-text-dark);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.rpgui-progress-fill {
+    height: 100%;
+    background: #388e3c;
+    transition: width 0.3s ease;
+}
+
+.rpgui-progress.red .rpgui-progress-fill {
+    background: linear-gradient(to bottom, #e53935, #c62828);
+}
+
+.rpgui-progress.blue .rpgui-progress-fill {
+    background: linear-gradient(to bottom, #1976d2, #0d47a1);
+}
+
+.rpgui-progress-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Combat Stats */
+.combat-stats {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--color-accent);
+    border-radius: 4px;
+    min-width: 120px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+}
+
+.stat-icon {
+    font-size: 16px;
+}
+
+.stat-label {
+    color: var(--color-text-dark);
+    font-weight: bold;
+}
+
+.stat-value {
+    color: var(--color-accent);
+    font-weight: bold;
+    margin-left: auto;
+}
+
+/* Quick Slots */
+.hud-quick-slots {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-text-dark);
+}
+
+.quick-slot-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-dark);
+    font-weight: bold;
+}
+
+.quick-slots-container {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.quick-slot {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--color-accent);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.quick-slot:hover {
+    border-color: var(--color-text);
+    background: rgba(212, 175, 55, 0.1);
+    transform: translateY(-2px);
+}
+
+.quick-slot .key-hint {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 22px;
+    height: 22px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: #000;
+    border: 2px solid var(--color-bg);
+}
+
+.quick-slot .slot-item {
+    max-width: 90%;
+    max-height: 90%;
+    image-rendering: pixelated;
+}
+
+.quick-slot .slot-quantity {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-size: var(--font-size-xs);
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 1px 2px #000;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+
+/* Dungeon Container */
+#dungeon-container {
+    background: #000;
+    border: 3px solid var(--color-accent);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#dungeon-canvas {
+    display: block;
+    image-rendering: pixelated;
+}
+
+/* ============ INVENTORY UI ============ */
+
+/* Inventory Toggle Button */
+.inventory-toggle-btn {
+    margin-left: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+}
+
+.inventory-toggle-btn.active {
+    background: rgba(212, 175, 55, 0.3);
+    border-color: var(--color-accent);
+}
+
+/* Inventory Panel */
+.inventory-panel {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 350px;
+    max-height: 80vh;
+    background: linear-gradient(135deg, rgba(20, 12, 8, 0.95), rgba(40, 25, 15, 0.95));
+    border: 3px solid var(--color-accent);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    z-index: 1000;
+    overflow-y: auto;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+    display: none;
+}
+
+.inventory-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.inventory-panel::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.inventory-panel::-webkit-scrollbar-thumb {
+    background: var(--color-accent);
+    border-radius: 4px;
+}
+
+/* Inventory Header */
+.inventory-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: var(--spacing-sm);
+}
+
+.inventory-header h3 {
+    color: var(--color-accent);
+    margin: 0;
+    font-size: var(--font-size-lg);
+}
+
+.inventory-close-btn {
+    background: none;
+    border: none;
+    color: var(--color-accent);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-normal);
+}
+
+.inventory-close-btn:hover {
+    color: var(--color-danger);
+    transform: rotate(90deg);
+}
+
+/* Equipment Section */
+.equipment-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.equipment-section h4 {
+    color: var(--color-accent);
+    margin: var(--spacing-md) 0 var(--spacing-sm) 0;
+    font-size: var(--font-size-md);
+}
+
+.equipment-slots {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.equipment-slot {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--color-accent);
+    border-radius: 6px;
+    padding: var(--spacing-sm);
+}
+
+.equipment-slot.weapon-slot {
+    border-left-width: 4px;
+    border-left-color: #ff6600;
+}
+
+.equipment-slot.armor-slot {
+    border-left-width: 4px;
+    border-left-color: #0099ff;
+}
+
+.slot-label {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-xs);
+    display: block;
+}
+
+.equipped-item {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-xs);
+}
+
+.empty-slot {
+    color: var(--color-text-secondary);
+    font-style: italic;
+    font-size: var(--font-size-sm);
+}
+
+.equipment-item-content {
+    padding: var(--spacing-xs);
+    border-radius: 4px;
+}
+
+.equipment-item-content.rarity-common {
+    background: rgba(204, 204, 204, 0.15);
+    color: #CCCCCC;
+}
+
+.equipment-item-content.rarity-uncommon {
+    background: rgba(0, 255, 0, 0.15);
+    color: #00FF00;
+}
+
+.equipment-item-content.rarity-rare {
+    background: rgba(0, 153, 255, 0.15);
+    color: #0099FF;
+}
+
+.equipment-item-content.rarity-epic {
+    background: rgba(153, 51, 255, 0.15);
+    color: #9933FF;
+}
+
+.equipment-item-content.rarity-legendary {
+    background: rgba(255, 102, 0, 0.15);
+    color: #FF6600;
+}
+
+.equipment-name {
+    font-weight: bold;
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-xs);
+}
+
+.equipment-stats {
+    font-size: var(--font-size-xs);
+    opacity: 0.9;
+}
+
+/* Items Section */
+.items-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.items-section h4 {
+    color: var(--color-accent);
+    margin: var(--spacing-md) 0 var(--spacing-sm) 0;
+    font-size: var(--font-size-md);
+}
+
+.inventory-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.empty-inventory {
+    text-align: center;
+    color: var(--color-text-secondary);
+    padding: var(--spacing-md);
+    font-style: italic;
+}
+
+/* Inventory Item */
+.inventory-item {
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    border-radius: 6px;
+    padding: var(--spacing-sm);
+    transition: all var(--transition-normal);
+}
+
+.inventory-item:hover {
+    border-color: var(--color-accent);
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.inventory-item.rarity-common {
+    border-left: 4px solid #CCCCCC;
+}
+
+.inventory-item.rarity-uncommon {
+    border-left: 4px solid #00FF00;
+}
+
+.inventory-item.rarity-rare {
+    border-left: 4px solid #0099FF;
+}
+
+.inventory-item.rarity-epic {
+    border-left: 4px solid #9933FF;
+}
+
+.inventory-item.rarity-legendary {
+    border-left: 4px solid #FF6600;
+}
+
+.item-content {
+    margin-bottom: var(--spacing-sm);
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+}
+
+.item-name {
+    font-weight: bold;
+    color: var(--color-text);
+    font-size: var(--font-size-md);
+}
+
+.item-rarity-badge {
+    font-size: var(--font-size-xs);
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: rgba(212, 175, 55, 0.3);
+    color: var(--color-accent);
+    text-transform: uppercase;
+}
+
+.item-type {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-xs);
+}
+
+.item-stats {
+    font-size: var(--font-size-xs);
+    color: var(--color-success);
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.4;
+}
+
+.item-description {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    font-style: italic;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.4;
+}
+
+/* Item Actions */
+.item-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+}
+
+.item-btn {
+    flex: 1;
+    min-width: 60px;
+    padding: 4px 8px;
+    font-size: var(--font-size-xs);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--color-text);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.item-btn:hover {
+    background: rgba(212, 175, 55, 0.3);
+    border-color: var(--color-accent);
+}
+
+.equip-btn {
+    background: rgba(0, 102, 204, 0.15);
+    border-color: #0099FF;
+    color: #0099FF;
+}
+
+.equip-btn:hover {
+    background: rgba(0, 102, 204, 0.3);
+}
+
+.use-btn {
+    background: rgba(0, 204, 0, 0.15);
+    border-color: #00FF00;
+    color: #00FF00;
+}
+
+.use-btn:hover {
+    background: rgba(0, 204, 0, 0.3);
+}
+
+.drop-btn {
+    background: rgba(204, 0, 0, 0.15);
+    border-color: #FF3333;
+    color: #FF3333;
+}
+
+.drop-btn:hover {
+    background: rgba(204, 0, 0, 0.3);
+}
+
+/* Inventory Footer */
+.inventory-footer {
+    border-top: 2px solid rgba(212, 175, 55, 0.3);
+    padding-top: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.inventory-gold {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font-size-md);
+}
+
+.gold-label {
+    color: var(--color-accent);
+    font-weight: bold;
+}
+
+.gold-amount {
+    color: var(--color-success);
+    font-weight: bold;
+    font-size: var(--font-size-lg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .inventory-panel {
+        width: 90vw;
+        max-width: 400px;
+        right: 5vw;
+        left: auto;
+        top: auto;
+        bottom: 20px;
+        transform: none;
+        max-height: 50vh;
+    }
+
+    .equipment-slots {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============ COMBAT FEEDBACK STYLES ============ */
+
+/* Combat Log Display */
+.hud-combat-log {
+    margin-top: var(--spacing-md);
+    border-top: 2px solid rgba(212, 175, 55, 0.3);
+    padding-top: var(--spacing-sm);
+}
+
+.log-label {
+    color: var(--color-accent);
+    font-weight: bold;
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
+    text-transform: uppercase;
+}
+
+#combat-log {
+    display: flex;
+    flex-direction: column-reverse;
+    max-height: 240px;
+    overflow-y: auto;
+    gap: var(--spacing-xs);
+    font-size: 12px;
+}
+
+.log-entry {
+    padding: 4px 8px;
+    border-radius: 4px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Combat log entry types */
+.log-attack {
+    color: #FFD700;
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.log-critical {
+    color: #FF6B6B;
+    background: rgba(255, 107, 107, 0.2);
+    font-weight: bold;
+}
+
+.log-damage {
+    color: #FF4444;
+    background: rgba(255, 68, 68, 0.1);
+}
+
+.log-death {
+    color: #FF0000;
+    background: rgba(255, 0, 0, 0.2);
+    font-weight: bold;
+}
+
+.log-reward {
+    color: #00FF00;
+    background: rgba(0, 255, 0, 0.15);
+    font-weight: bold;
+}
+
+.log-kill {
+    color: #FFD700;
+    background: rgba(255, 215, 0, 0.2);
+    font-weight: bold;
+}
+
+/* Floating Damage Numbers */
+.floating-damage {
+    font-family: 'Arial Black', sans-serif;
+    font-weight: bold;
+    pointer-events: none;
+    user-select: none;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.8));
+}
+
+.floating-damage.normal {
+    color: #FFD700;
+    font-size: 18px;
+}
+
+.floating-damage.critical {
+    color: #FF6B6B;
+    font-size: 24px;
+    animation: criticalPulse 0.5s ease-out;
+}
+
+@keyframes criticalPulse {
+    0% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* Character Portrait Effects */
+#char-portrait {
+    transition: filter var(--transition-fast);
+}
+
+#char-portrait.critical-shake {
+    animation: characterShake 0.3s ease-out;
+}
+
+@keyframes characterShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* HP Bar Flash Effects */
+.rpgui-progress.critical {
+    animation: damageFlash 0.4s ease-out;
+}
+
+@keyframes damageFlash {
+    0% {
+        filter: brightness(1.5) drop-shadow(0 0 10px #FF0000);
+    }
+    100% {
+        filter: brightness(1);
+    }
+}
+
+/* Level Up Animation */
+#char-level.bounce {
+    animation: levelUpBounce 0.5s ease-out;
+}
+
+@keyframes levelUpBounce {
+    0% {
+        transform: scale(1) translateY(0);
+    }
+    50% {
+        transform: scale(1.3) translateY(-10px);
+        color: #FFD700;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Scrollbar Styling for Combat Log */
+#combat-log::-webkit-scrollbar {
+    width: 8px;
+}
+
+#combat-log::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+#combat-log::-webkit-scrollbar-thumb {
+    background: rgba(212, 175, 55, 0.5);
+    border-radius: 4px;
+}
+
+#combat-log::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 175, 55, 0.8);
+}
+
+/* Responsive Combat Feedback */
+@media (max-width: 768px) {
+    #combat-log {
+        max-height: 100px;
+        font-size: 11px;
+    }
+
+    .floating-damage.normal {
+        font-size: 16px;
+    }
+
+    .floating-damage.critical {
+        font-size: 20px;
+    }
+
+    .log-entry {
+        padding: 3px 6px;
+    }
+}
+
+/* ============ STATUS EFFECTS STYLES ============ */
+
+/* Status Effects Display */
+.status-effects-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: var(--spacing-xs);
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    min-height: 28px;
+}
+
+.status-effect {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    border: 1px solid;
+    cursor: help;
+    transition: all 0.2s ease;
+}
+
+.status-effect:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.status-effect .effect-icon {
+    font-size: 14px;
+}
+
+.status-effect .effect-duration {
+    min-width: 16px;
+    text-align: center;
+    font-size: 10px;
+    opacity: 0.8;
+}
+
+/* Status effect type styles */
+.status-poison {
+    background: rgba(0, 255, 0, 0.25);
+    color: #00FF00;
+    border-color: #00AA00;
+}
+
+.status-burn {
+    background: rgba(255, 107, 0, 0.25);
+    color: #FF6B00;
+    border-color: #CC5500;
+}
+
+.status-stun {
+    background: rgba(255, 255, 0, 0.25);
+    color: #FFFF00;
+    border-color: #CCCC00;
+}
+
+.status-freeze {
+    background: rgba(0, 204, 255, 0.25);
+    color: #00CCFF;
+    border-color: #0099CC;
+}
+
+.status-bleed {
+    background: rgba(255, 0, 0, 0.25);
+    color: #FF0000;
+    border-color: #CC0000;
+}
+
+.status-weakness {
+    background: rgba(255, 20, 147, 0.25);
+    color: #FF1493;
+    border-color: #CC0066;
+}
+
+/* Combat log effect entries */
+.log-effect {
+    color: #9933FF;
+    background: rgba(153, 51, 255, 0.15);
+}
+
+/* Effect animation on apply */
+@keyframes effectApply {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.status-effect {
+    animation: effectApply 0.3s ease-out;
+}
+
+/* Effect removal animation */
+@keyframes effectRemove {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+/* Pulses effect for low duration */
+@keyframes effectPulse {
+    0%, 100% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.3);
+    }
+}
+
+/* Enemy status effects in dungeon */
+.enemy-status-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    display: flex;
+    gap: 2px;
+    padding: 2px 4px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 3px;
+    font-size: 10px;
+    z-index: 10;
+}
+
+.enemy-status-badge .effect-icon {
+    display: inline-block;
+}
+
+/* Status effect tooltips */
+.status-effect[title] {
+    position: relative;
+}
+
+/* Responsive status effects */
+@media (max-width: 768px) {
+    .status-effects-display {
+        gap: 2px;
+        padding: 2px;
+        min-height: 24px;
+    }
+
+    .status-effect {
+        padding: 1px 4px;
+        font-size: 11px;
+    }
+
+    .status-effect .effect-icon {
+        font-size: 12px;
+    }
+
+    .status-effect .effect-duration {
+        font-size: 9px;
+    }
+}
+
+/* ======================== */
+/* ABILITIES DISPLAY STYLES */
+/* ======================== */
+
+.abilities-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    margin-top: var(--spacing-md);
+}
+
+/* Individual ability button */
+.ability-button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, rgba(30, 40, 60, 0.8), rgba(20, 30, 50, 0.9));
+    border: 2px solid var(--color-accent);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    gap: 4px;
+    text-align: center;
+    color: var(--color-text);
+    font-size: 11px;
+    font-weight: 500;
+    user-select: none;
+    overflow: hidden;
+}
+
+.ability-button:hover:not(.on-cooldown) {
+    transform: translateY(-3px);
+    border-color: var(--color-success);
+    background: linear-gradient(135deg, rgba(50, 100, 80, 0.8), rgba(30, 80, 60, 0.9));
+    box-shadow: 0 6px 12px rgba(50, 205, 50, 0.3);
+}
+
+/* Ready ability (usable) */
+.ability-button.ready {
+    box-shadow: inset 0 0 8px rgba(50, 205, 50, 0.2);
+}
+
+.ability-button.ready:hover {
+    box-shadow: inset 0 0 12px rgba(50, 205, 50, 0.4), 0 6px 12px rgba(50, 205, 50, 0.3);
+}
+
+/* Selected ability */
+.ability-button.selected {
+    border-color: var(--color-text);
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.6), rgba(200, 160, 40, 0.7));
+    box-shadow: 0 0 16px rgba(212, 175, 55, 0.6), inset 0 0 12px rgba(212, 175, 55, 0.3);
+    animation: abilityPulse 0.6s ease-in-out infinite;
+}
+
+/* On cooldown ability */
+.ability-button.on-cooldown {
+    opacity: 0.5;
+    border-color: var(--color-danger);
+    background: linear-gradient(135deg, rgba(80, 30, 30, 0.8), rgba(60, 20, 20, 0.9));
+    cursor: not-allowed;
+    filter: grayscale(0.6);
+}
+
+.ability-button.on-cooldown:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--color-danger);
+}
+
+/* Ability icon */
+.ability-icon {
+    font-size: 28px;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+/* Ability name */
+.ability-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    word-wrap: break-word;
+}
+
+.ability-button.selected .ability-name {
+    color: var(--color-text);
+}
+
+/* Cooldown badge (shows remaining turns) */
+.cooldown-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 24px;
+    height: 24px;
+    background: var(--color-danger);
+    border: 2px solid var(--color-text);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--color-text);
+    animation: cooldownPulse 0.8s ease-in-out infinite;
+}
+
+/* Keyboard shortcut indicator */
+.ability-shortcut {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-size: 10px;
+    font-weight: bold;
+    color: rgba(212, 175, 55, 0.6);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Resource/Mana bar */
+.ability-resources {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--color-accent);
+    border-radius: 6px;
+    margin-top: var(--spacing-sm);
+}
+
+.resource-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-accent);
+    min-width: 50px;
+}
+
+.resource-bar {
+    flex: 1;
+    height: 16px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.resource-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-success), var(--color-accent));
+    transition: width var(--transition-normal);
+    box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+.resource-text {
+    font-size: 11px;
+    color: var(--color-text);
+    min-width: 45px;
+    text-align: right;
+    font-weight: 500;
+}
+
+/* Ability animations */
+@keyframes abilityPulse {
+    0%, 100% {
+        box-shadow: 0 0 16px rgba(212, 175, 55, 0.6), inset 0 0 12px rgba(212, 175, 55, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 24px rgba(212, 175, 55, 0.8), inset 0 0 16px rgba(212, 175, 55, 0.5);
+    }
+}
+
+@keyframes cooldownPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes abilityActivate {
+    0% {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Ability cast feedback in combat log */
+.combat-log-entry.ability {
+    color: var(--color-accent);
+    font-weight: 600;
+    border-left: 3px solid var(--color-accent);
+    padding-left: var(--spacing-sm);
+}
+
+.combat-log-entry.ability::before {
+    content: '⚔️ ';
+    margin-right: 4px;
+}
+
+/* Responsive abilities display */
+@media (max-width: 1024px) {
+    .abilities-display {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 8px;
+        padding: var(--spacing-sm);
+    }
+
+    .ability-button {
+        padding: var(--spacing-sm);
+        font-size: 10px;
+    }
+
+    .ability-icon {
+        font-size: 24px;
+    }
+
+    .ability-name {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .abilities-display {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        gap: 6px;
+        padding: 6px;
+    }
+
+    .ability-button {
+        padding: 6px;
+        border-width: 1px;
+        gap: 2px;
+    }
+
+    .ability-icon {
+        font-size: 20px;
+    }
+
+    .ability-name {
+        font-size: 9px;
+    }
+
+    .ability-shortcut {
+        font-size: 8px;
+        bottom: 1px;
+        right: 2px;
+    }
+
+    .cooldown-badge {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+        border-width: 1px;
+    }
+
+    .ability-resources {
+        gap: 6px;
+        padding: var(--spacing-sm);
+    }
+
+    .resource-label {
+        font-size: 10px;
+        min-width: 40px;
+    }
+
+    .resource-bar {
+        height: 12px;
+    }
+
+    .resource-text {
+        font-size: 10px;
+        min-width: 40px;
+    }
+}
+
+/* Ultimate ability highlight */
+.ability-button[data-ability-id*="ultimate"] {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, rgba(200, 50, 50, 0.8), rgba(150, 30, 30, 0.9));
+    border-color: var(--color-danger);
+}
+
+.ability-button[data-ability-id*="ultimate"]:hover:not(.on-cooldown) {
+    border-color: var(--color-warning);
+    background: linear-gradient(135deg, rgba(220, 80, 80, 0.8), rgba(180, 50, 50, 0.9));
+    box-shadow: 0 6px 16px rgba(220, 80, 80, 0.4);
+}
+
+.ability-button[data-ability-id*="ultimate"] .ability-name {
+    color: var(--color-warning);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Floating Stats Panel Styles */
+.floating-character-info {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-accent);
+}
+
+.floating-progress-bars {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.floating-progress-bars .bar-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.floating-progress-bars .bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-xs);
+}
+
+.floating-combat-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-xs);
+}
+
+.floating-combat-stats .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+.floating-combat-stats .stat-icon {
+    font-size: 14px;
+}
+
+.floating-combat-stats .stat-value {
+    font-weight: bold;
+    color: var(--color-accent);
+}

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Cobblestone Caverns - A browser-based roguelike dungeon crawler">
+    <meta name="theme-color" content="#2c1810">
+    <title>Cobblestone Caverns</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+    
+    <!-- RPGUI CSS Framework -->
+    <link rel="stylesheet" href="css/rpgui/rpgui.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Main Container -->
+    <div id="app" class="rpgui-content">
+        <!-- Main Menu Screen -->
+        <div id="main-menu" class="screen active">
+            <div class="menu-container">
+                <h1 class="game-title">Cobblestone Caverns</h1>
+                
+                <div class="menu-buttons">
+                    <button class="rpgui-button" id="btn-new-game">
+                        <p>New Game</p>
+                    </button>
+                    
+                    <button class="rpgui-button" id="btn-load-game" disabled>
+                        <p>Load Game</p>
+                    </button>
+                    
+                    <button class="rpgui-button" id="btn-help">
+                        <p>Help</p>
+                    </button>
+                </div>
+                
+                <div class="copyright">
+                    <p>&copy; 2025 Cobblestone Caverns. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Panel -->
+        <div id="help-panel" class="screen">
+            <div class="rpgui-container framed-golden">
+                <h2>Help</h2>
+                
+                <div class="help-content">
+                    <section>
+                        <h3>Stats</h3>
+                        <ul>
+                            <li><strong>HP:</strong> Maximum health points</li>
+                            <li><strong>ATK:</strong> Determines damage dealt to enemies</li>
+                            <li><strong>DEF:</strong> Reduces incoming damage</li>
+                            <li><strong>CRT:</strong> Critical hit chance (%)</li>
+                            <li><strong>XP/LVL:</strong> Experience points and character level</li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h3>Movement Controls</h3>
+                        <h4>Keyboard:</h4>
+                        <ul>
+                            <li><strong>W</strong> or <strong>↑:</strong> Move up one tile</li>
+                            <li><strong>S</strong> or <strong>↓:</strong> Move down one tile</li>
+                            <li><strong>A</strong> or <strong>←:</strong> Move left one tile</li>
+                            <li><strong>D</strong> or <strong>→:</strong> Move right one tile</li>
+                        </ul>
+                        
+                        <h4>Mobile:</h4>
+                        <ul>
+                            <li>Swipe <strong>up, down, left, or right</strong> to move one grid in that direction</li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h3>Quick Slots</h3>
+                        <ul>
+                            <li><strong>1:</strong> Use item in Quick Slot 1</li>
+                            <li><strong>2:</strong> Use item in Quick Slot 2</li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h3>Gameplay</h3>
+                        <ul>
+                            <li>Combat is turn-based (one move = one action)</li>
+                            <li>Interact with stairs, merchants, props, or loot by moving onto the same tile</li>
+                            <li>Attack enemies by moving adjacent to them or onto their tile</li>
+                            <li>Destroy crates, barrels, and vases for loot and gold</li>
+                        </ul>
+                    </section>
+                </div>
+                
+                <button class="rpgui-button" id="btn-close-help">
+                    <p>Back to Menu</p>
+                </button>
+            </div>
+        </div>
+
+        <!-- Character Creation Screen -->
+        <div id="character-creation" class="screen">
+            <div class="rpgui-container framed-golden">
+                <h2>Choose Your Class</h2>
+                
+                <div class="class-selection">
+                    <!-- Warrior Class Card -->
+                    <div id="class-warrior" class="class-card rpgui-container framed">
+                        <div class="class-header">
+                            <h3 class="class-name">Warrior</h3>
+                        </div>
+                        <p class="class-description">A balanced fighter with good defense and moderate damage.</p>
+                        
+                        <div class="class-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">HP:</span>
+                                <span class="stat-value stat-hp">100</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">ATK:</span>
+                                <span class="stat-value stat-atk">12</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">DEF:</span>
+                                <span class="stat-value stat-def">8</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">CRT:</span>
+                                <span class="stat-value stat-crt">5%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="class-equipment">
+                            <h4>Starting Equipment</h4>
+                            <div class="equipment-list">
+                                <div class="equipment-item">
+                                    <span class="equipment-label">Weapon:</span>
+                                    <span class="equipment-weapon">Iron Sword</span>
+                                </div>
+                                <div class="equipment-item">
+                                    <span class="equipment-label">Armor:</span>
+                                    <span class="equipment-armor">Chain Mail</span>
+                                </div>
+                                <div class="equipment-item">
+                                    <span class="equipment-label">Accessory:</span>
+                                    <span class="equipment-accessory">None</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Barbarian Class Card -->
+                    <div id="class-barbarian" class="class-card rpgui-container framed">
+                        <div class="class-header">
+                            <h3 class="class-name">Barbarian</h3>
+                        </div>
+                        <p class="class-description">A brutal warrior with high attack and HP but lower defense.</p>
+                        
+                        <div class="class-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">HP:</span>
+                                <span class="stat-value stat-hp">120</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">ATK:</span>
+                                <span class="stat-value stat-atk">15</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">DEF:</span>
+                                <span class="stat-value stat-def">5</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">CRT:</span>
+                                <span class="stat-value stat-crt">8%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="class-equipment">
+                            <h4>Starting Equipment</h4>
+                            <div class="equipment-list">
+                                <div class="equipment-item">
+                                    <span class="equipment-label">Weapon:</span>
+                                    <span class="equipment-weapon">Battle Axe</span>
+                                </div>
+                                <div class="equipment-item">
+                                    <span class="equipment-label">Armor:</span>
+                                    <span class="equipment-armor">Leather Armor</span>
+                                </div>
+                                <div class="equipment-item">
+                                    <span class="equipment-label">Accessory:</span>
+                                    <span class="equipment-accessory">None</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rogue Class Card -->
+                    <div id="class-rogue" class="class-card rpgui-container framed">
+                        <div class="class-header">
+                            <h3 class="class-name">Rogue</h3>
+                        </div>
+                        <p class="class-description">A nimble fighter with high critical chance and evasion.</p>
+                        
+                        <div class="class-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">HP:</span>
+                                <span class="stat-value stat-hp">80</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">ATK:</span>
+                                <span class="stat-value stat-atk">10</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">DEF:</span>
+                                <span class="stat-value stat-def">6</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">CRT:</span>
+                                <span class="stat-value stat-crt">15%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="class-equipment">
+                            <h4>Starting Equipment</h4>
+                            <div class="equipment-list">
+                                <div class="equipment-item">
+                                    <span class="equipment-label">Weapon:</span>
+                                    <span class="equipment-weapon">Twin Daggers</span>
+                                </div>
+                                <div class="equipment-item">
+                                    <span class="equipment-label">Armor:</span>
+                                    <span class="equipment-armor">Leather Vest</span>
+                                </div>
+                                <div class="equipment-item">
+                                    <span class="equipment-label">Accessory:</span>
+                                    <span class="equipment-accessory">Lucky Charm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Selected Class Info Panel -->
+                <div id="selected-class-info" class="selected-info" style="display: none;">
+                    <h3>Selected: <span class="selected-class-name"></span></h3>
+                    <p class="selected-class-desc"></p>
+                </div>
+                
+                <!-- Confirm Button -->
+                <div class="button-container">
+                    <button class="rpgui-button" id="confirm-class-btn" disabled>
+                        <p>Confirm Selection</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <!-- Center: Dungeon Canvas -->
+            <div id="dungeon-container">
+                <canvas id="dungeon-canvas"></canvas>
+            </div>
+            <div id="game-hud" class="rpgui-container framed">
+                <!-- Top Bar: Character Info -->
+                <div class="hud-top-bar">
+                    <div class="character-info">
+                        <div class="character-portrait">
+                            <img id="char-portrait" src="" alt="Character" class="portrait-image">
+                        </div>
+                        <div class="character-stats">
+                            <div class="char-name-level">
+                                <span id="char-class" class="char-class">Warrior</span>
+                                <span id="char-level" class="char-level">Lvl 1</span>
+                            </div>
+                            <div class="char-floor">
+                                <span class="floor-label">Floor:</span>
+                                <span id="floor-number" class="floor-number">1</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Bars -->
+                    <div class="progress-bars">
+                        <!-- HP Bar -->
+                        <div class="bar-container">
+                            <div class="bar-label">
+                                <span>HP</span>
+                                <span id="hp-text" class="bar-value">100/100</span>
+                            </div>
+                            <div class="rpgui-progress red">
+                                <div id="hp-bar-fill" class="rpgui-progress-fill" data-value="100"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- XP Bar -->
+                        <div class="bar-container">
+                            <div class="bar-label">
+                                <span>XP</span>
+                                <span id="xp-text" class="bar-value">0/100</span>
+                            </div>
+                            <div class="rpgui-progress blue">
+                                <div id="xp-bar-fill" class="rpgui-progress-fill" data-value="0"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Combat Stats -->
+                    <div class="combat-stats">
+                        <div class="stat-item">
+                            <span class="stat-icon">⚔️</span>
+                            <span class="stat-label">ATK:</span>
+                            <span id="stat-atk" class="stat-value">12</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-icon">🛡️</span>
+                            <span class="stat-label">DEF:</span>
+                            <span id="stat-def" class="stat-value">8</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-icon">💥</span>
+                            <span class="stat-label">CRT:</span>
+                            <span id="stat-crt" class="stat-value">5%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Slots -->
+                <div class="hud-quick-slots">
+                    <div class="quick-slot-label">Quick Slots:</div>
+                    <div class="quick-slots-container">
+                        <div class="quick-slot" id="quick-slot-1" data-slot="1">
+                            <div class="key-hint">1</div>
+                            <img class="slot-item" src="" alt="" style="display: none;">
+                            <div class="slot-quantity" style="display: none;">0</div>
+                        </div>
+                        <div class="quick-slot" id="quick-slot-2" data-slot="2">
+                            <div class="key-hint">2</div>
+                            <img class="slot-item" src="" alt="" style="display: none;">
+                            <div class="slot-quantity" style="display: none;">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Combat Log -->
+                <div class="hud-combat-log">
+                    <div class="log-label">Combat Log:</div>
+                    <div id="combat-log" class="combat-log-entries"></div>
+                </div>
+            </div>
+            
+            <!-- Dungeon Canvas -->
+            <div id="dungeon-container">
+                <canvas id="dungeon-canvas"></canvas>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over" class="screen">
+            <div class="rpgui-container framed-golden">
+                <h2>Game Over</h2>
+                <div id="final-stats"></div>
+                <button class="rpgui-button" id="btn-return-menu">
+                    <p>Return to Menu</p>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RPGUI JavaScript -->
+    <script src="css/rpgui/rpgui.min.js"></script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+
+    <!-- Core JavaScript Modules -->
+    <script type="module" src="js/config.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
