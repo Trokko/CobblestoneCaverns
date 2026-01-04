@@ -135,39 +135,55 @@ export class Enemy {
      * Wander around randomly
      * @param {Dungeon} dungeon - The current dungeon
      */
-    executeWander(dungeon) {
+    async executeWander(dungeon) {
+        // Increase timer and decide when to pick a new target
         this.wanderTimer++;
-        
-        // Change direction occasionally
-        if (this.wanderTimer >= this.wanderChangeInterval) {
+
+        // If we don't have a wander target or it's time to change, pick a new one
+        if (!this.wanderTarget || this.wanderTimer >= this.wanderChangeInterval) {
             this.wanderTimer = 0;
-            
-            // Pick a random adjacent tile
-            const directions = [
-                { dx: 0, dy: -1 }, // up
-                { dx: 0, dy: 1 },  // down
-                { dx: -1, dy: 0 }, // left
-                { dx: 1, dy: 0 }   // right
-            ];
-            
-            // Shuffle directions
-            for (let i = directions.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [directions[i], directions[j]] = [directions[j], directions[i]];
+            this.wanderTarget = this.pickRandomWanderTarget(dungeon);
+            if (this.wanderTarget) {
+                // Compute path to target
+                this.wanderPath = this.findPathToTile(this.wanderTarget.x, this.wanderTarget.y, dungeon) || [];
+            } else {
+                this.wanderPath = [];
             }
-            
-            // Try to move in a random direction
-            for (const dir of directions) {
-                const newX = this.x + dir.dx;
-                const newY = this.y + dir.dy;
-                
-                if (dungeon.isWalkable(newX, newY)) {
-                    const entityAtPos = dungeon.getEntityAt(newX, newY);
-                    if (!entityAtPos) {
-                        this.x = newX;
-                        this.y = newY;
-                        break;
-                    }
+        }
+
+        // If we have a path towards the wander target, step along it
+        if (this.wanderPath && this.wanderPath.length > 0) {
+            const nextPos = this.wanderPath.shift();
+            if (dungeon.isWalkable(nextPos.x, nextPos.y) && !dungeon.getEntityAt(nextPos.x, nextPos.y)) {
+                this.x = nextPos.x;
+                this.y = nextPos.y;
+            } else {
+                // Blocked; abandon this target
+                this.wanderTarget = null;
+                this.wanderPath = [];
+            }
+
+            // If reached target, clear it so a new target will be chosen later
+            if (this.wanderTarget && this.x === this.wanderTarget.x && this.y === this.wanderTarget.y) {
+                this.wanderTarget = null;
+                this.wanderPath = [];
+            }
+        } else {
+            // No path: try a small random step so enemies look alive
+            const directions = [
+                { dx: 0, dy: -1 },
+                { dx: 0, dy: 1 },
+                { dx: -1, dy: 0 },
+                { dx: 1, dy: 0 }
+            ];
+            const shuffled = directions.sort(() => Math.random() - 0.5);
+            for (const dir of shuffled) {
+                const nx = this.x + dir.dx;
+                const ny = this.y + dir.dy;
+                if (dungeon.isWalkable(nx, ny) && !dungeon.getEntityAt(nx, ny)) {
+                    this.x = nx;
+                    this.y = ny;
+                    break;
                 }
             }
         }
@@ -180,25 +196,36 @@ export class Enemy {
      * @returns {Array} - Array of {x, y} positions leading to player
      */
     findPathToPlayer(player, dungeon) {
+        return this.findPathToTile(player.x, player.y, dungeon);
+    }
+
+    /**
+     * Find a path to an arbitrary tile using BFS
+     * @param {number} tx - Target x
+     * @param {number} ty - Target y
+     * @param {Dungeon} dungeon
+     * @returns {Array|null} - path as array of {x,y} excluding start
+     */
+    findPathToTile(tx, ty, dungeon) {
         // Simple BFS pathfinding
         const queue = [[{ x: this.x, y: this.y }]];
         const visited = new Set();
         visited.add(`${this.x},${this.y}`);
-        
-        const maxSearchSteps = 50; // Limit search to avoid performance issues
+
+        const maxSearchSteps = 200; // Allow a slightly larger search for wander targets
         let searchSteps = 0;
-        
+
         while (queue.length > 0 && searchSteps < maxSearchSteps) {
             searchSteps++;
             const path = queue.shift();
             const current = path[path.length - 1];
-            
-            // Check if we reached the player
-            if (current.x === player.x && current.y === player.y) {
+
+            // Check if we reached the target tile
+            if (current.x === tx && current.y === ty) {
                 // Return path without the starting position
                 return path.slice(1);
             }
-            
+
             // Explore neighbors (up, down, left, right)
             const neighbors = [
                 { x: current.x, y: current.y - 1 }, // up
@@ -206,10 +233,10 @@ export class Enemy {
                 { x: current.x - 1, y: current.y }, // left
                 { x: current.x + 1, y: current.y }  // right
             ];
-            
+
             for (const neighbor of neighbors) {
                 const key = `${neighbor.x},${neighbor.y}`;
-                
+
                 if (!visited.has(key) && dungeon.isWalkable(neighbor.x, neighbor.y)) {
                     visited.add(key);
                     const newPath = [...path, neighbor];
@@ -217,7 +244,7 @@ export class Enemy {
                 }
             }
         }
-        
+
         // No path found
         return null;
     }
@@ -233,6 +260,29 @@ export class Enemy {
         const dy = Math.abs(this.y - targetY);
         // Chebyshev distance (max of dx, dy) for 8-directional movement
         return Math.max(dx, dy);
+    }
+
+    /**
+     * Pick a random wander target within the enemy's wander radius
+     * @param {Dungeon} dungeon
+     * @returns {Object|null} - {x, y} or null if none found
+     */
+    pickRandomWanderTarget(dungeon) {
+        const candidates = [];
+        for (let dx = -this.wanderRadius; dx <= this.wanderRadius; dx++) {
+            for (let dy = -this.wanderRadius; dy <= this.wanderRadius; dy++) {
+                const tx = this.lastWanderPos.x + dx;
+                const ty = this.lastWanderPos.y + dy;
+                if (dungeon.isWalkable(tx, ty) && Math.max(Math.abs(dx), Math.abs(dy)) <= this.wanderRadius) {
+                    // Avoid selecting current tile
+                    if (tx === this.x && ty === this.y) continue;
+                    candidates.push({ x: tx, y: ty });
+                }
+            }
+        }
+
+        if (candidates.length === 0) return null;
+        return candidates[Math.floor(Math.random() * candidates.length)];
     }
     
     /**

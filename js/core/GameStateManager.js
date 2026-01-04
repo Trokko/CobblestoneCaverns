@@ -174,6 +174,14 @@ class GameStateManager {
                     } else if (enemy.takeTurn) {
                         // Normal AI behavior (wander/chase) - respects movement restrictions
                         await enemy.takeTurn(this.player, this.dungeon);
+                        // Debug: log enemy AI state and position
+                        try {
+                            const msg = `Enemy Turn: ${enemy.name} (${enemy.id}) state=${enemy.aiState} pos=${enemy.x},${enemy.y}`;
+                            console.debug(msg);
+                            if (window.appendDevLog) window.appendDevLog(msg);
+                        } catch (err) {
+                            console.error('Error logging enemy state', err);
+                        }
                     }
                 }
             }

@@ -84,6 +84,64 @@ class Game {
         // Kolla om det finns ett sparat spel
         await this.checkForSavedGame();
 
+        // Auto-test mode: start a default Warrior immediately if URL has ?autotest=1
+        try {
+            if (window.location && window.location.search && window.location.search.indexOf('autotest=1') !== -1) {
+                console.log('Autotest mode detected - creating test player');
+
+                // Create a visible dev log panel on the page
+                let devLogEl = document.getElementById('dev-log');
+                if (!devLogEl) {
+                    devLogEl = document.createElement('div');
+                    devLogEl.id = 'dev-log';
+                    devLogEl.style.position = 'fixed';
+                    devLogEl.style.right = '10px';
+                    devLogEl.style.bottom = '10px';
+                    devLogEl.style.width = '300px';
+                    devLogEl.style.height = '200px';
+                    devLogEl.style.overflow = 'auto';
+                    devLogEl.style.background = 'rgba(0,0,0,0.8)';
+                    devLogEl.style.color = '#fff';
+                    devLogEl.style.fontSize = '12px';
+                    devLogEl.style.padding = '8px';
+                    devLogEl.style.zIndex = 9999;
+                    devLogEl.style.border = '1px solid #666';
+                    devLogEl.style.borderRadius = '4px';
+                    document.body.appendChild(devLogEl);
+                }
+
+                window.appendDevLog = function(msg) {
+                    if (!msg) return;
+                    const el = document.getElementById('dev-log');
+                    if (el) {
+                        const entry = document.createElement('div');
+                        entry.textContent = msg;
+                        el.appendChild(entry);
+                        el.scrollTop = el.scrollHeight;
+                    }
+                    console.debug(msg);
+
+                    // Also POST to local dev log server for retrieval
+                    try {
+                        fetch('http://localhost:9001/log', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'text/plain' },
+                            body: msg
+                        }).catch(err => console.debug('Failed to post dev log:', err));
+                    } catch (err) {
+                        console.debug('Failed to post dev log (sync):', err);
+                    }
+                };
+
+                const { Player } = await import('./entities/Player.js');
+                const testPlayer = new Player('warrior');
+                // Call existing flow for a created character
+                this.onCharacterCreated(testPlayer);
+            }
+        } catch (err) {
+            console.error('Autotest start failed:', err);
+        }
+
         // Spela menymusik - äntligen igång!
         audioManager.playMusic('menu');
 
